@@ -1,0 +1,15 @@
+body {
+    font-family: 'Courier';
+}
+
+button {
+    color: white;
+    background-color: hsl(330, 81%, 60%); /* Green */
+    border-radius: 6px;
+    border: none;
+    padding: .5rem 1rem;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+
+
+  }
