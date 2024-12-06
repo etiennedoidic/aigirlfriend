@@ -19,6 +19,7 @@
 		"vite": "^6.0.0"
 	},
 	"dependencies": {
-		"@friendofsvelte/tipex": "^0.0.7-up-5"
+		"@friendofsvelte/tipex": "^0.0.7-up-5",
+		"dexie": "^4.0.10"
 	}
 }

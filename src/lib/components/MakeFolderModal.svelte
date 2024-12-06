@@ -1,4 +1,5 @@
 <script>
+	import { db } from '../db';
 	let { showModal = $bindable() } = $props();
 
 	let dialog = $state(); // HTMLDialogElement
@@ -9,18 +10,22 @@
    /**
    * @type {string}
    */
-   let title = $state('');
+   let folderTitle = $state('');
 
    /**
    * @type {string}
    */
-   let purpose = $state('');
+   let folderPurpose = $state('');
 
-   function showName() {
-	   dialog.close()
-       console.log(title);
-	   console.log(purpose);
-   }
+    async function showName() {
+		dialog.close()
+		console.log(folderTitle);
+		console.log(folderPurpose);
+		await db.folders.add({
+			title: folderTitle,
+			purpose: folderPurpose
+		});
+  }
 </script>
 
 <!-- svelte-ignore a11y_click_events_have_key_events, a11y_no_noninteractive_element_interactions -->
@@ -36,10 +41,10 @@
 
 		<h3>Title</h3>
 		<p>what should we call it? 0:</p>
-		<input type="text" placeholder="title" bind:value={title}>
+		<input type="text" placeholder="title" bind:value={folderTitle}>
 		<h3>Purpose</h3>
 		<p>Every scrapbook needs a reason...</p>
-		<input id="name" type="text" bind:value={purpose}>
+		<input id="name" type="text" bind:value={folderPurpose}>
 
 		
 		 <!-- svelte-ignore a11y_autofocus -->

@@ -1,14 +1,30 @@
 <script lang="ts">
-    import {Tipex} from "@friendofsvelte/tipex";
+    import { liveQuery } from "dexie";
+    import { db } from '../lib/db';
 	import MakeFolderModal from '$lib/components/MakeFolderModal.svelte';
-	let body = `<p>Talk to me plz :3</p>`;
 	let showModal = $state(false);
 	import '../app.css';
+
+    //
+    // Query
+    //
+    let folders = $derived(liveQuery(async () => {
+        //
+        // Query Dexie's API
+        //
+        const folders = await db.folders
+        .toArray();
+
+        // Return result
+        return folders;
+    }));
+
+
 </script>
 
 <svelte:head>
-	<title>Home</title>
-	<meta name="description" content="Svelte demo app" />
+	<title>AI GIRLFRIEND HOME</title>
+	<meta name="description" content="AI Notetaking App" />
 </svelte:head>
 
 <section>
@@ -20,13 +36,15 @@
 
 	<MakeFolderModal bind:showModal></MakeFolderModal>
 
-	<Tipex 
-    {body} 
-    controls 
-    floating
-    style="margin-top: 1rem; margin-bottom: 0;"
-    class="h-[70vh] border border-neutral-200"
-/>
+    <ul>
+        {#if $folders}
+          {#each $folders as folder (folder.id)}
+            <li>
+                <a href='/folders?id={folder.id}'>{folder.title}</a>
+            </li>
+          {/each}
+        {/if}
+      </ul>
 
 </section>
 
